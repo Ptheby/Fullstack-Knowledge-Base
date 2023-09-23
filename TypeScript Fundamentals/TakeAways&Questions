@@ -7,3 +7,4 @@ Video 2- Shows me how you assign a type in a example function.   Function add(a,
 And if you try to type in something other than the type assigned, it will give you an immediate error which is not how JS works. WHich can be helpful when writing. 
 
 Video 3- Installing TypeSCript- I had to install node.js. then spent awhiole trying to figure out how to get Typescript. GOt it through the node.js terminal and also with Visual Studio Code but it says "Visual Studio" not code. and it mentiuons C++ so VS might be different than VSC.
+i'm not sure what any of it means or how to effectively use it. The instructions use alot of terms i don't know.  
