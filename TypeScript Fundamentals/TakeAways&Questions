@@ -1,0 +1,9 @@
+1. Video one just tells us that TypeScript is built off or extended from JavsScript. It is staticly typed instead of dynamicly typed like JavaScript. Dynamically typed means that variables or values types do not need to be assigned as written but are give at execution. It lends to 
+alot of different possibilties but also can lend itself to errors if you are working on a complex project with multiple users or not even. Staticly typed means the type is assigned when it's written. 
+
+Video 2- Shows me how you assign a type in a example function.   Function add(a,b) {                                                        Function add(a:number, b:number)
+                                                                 return a + b;                                                               return a +b;
+                                                                { const result = add(5,4); console.log(result) //9     now in TypeSCript     } const result= add(7,3) //10        
+And if you try to type in something other than the type assigned, it will give you an immediate error which is not how JS works. WHich can be helpful when writing. 
+
+Video 3- Installing TypeSCript- I had to install node.js. then spent awhiole trying to figure out how to get Typescript. GOt it through the node.js terminal and also with Visual Studio Code but it says "Visual Studio" not code. and it mentiuons C++ so VS might be different than VSC.
