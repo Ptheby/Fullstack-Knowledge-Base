@@ -1,0 +1,157 @@
+Coding Along with The Basics Videos Coding along with the basics video playlist for angular course. The Basics Videos Video 1- Module Introduction- no info really Video 2- How an Angular App gets Loaded and Started It all starts at the main.ts file where we use bootstrap to pass appModule as an argument like this bootstrap(appModule) which the appModule is also listed as an Import on that same main.ts file. The appModule argument tells Angular to look at the app.module.ts, where the bootstrap has AppComponent and AppComponent is listed as an import there, this directs it to look at the app components , possible the css, html, ts. Maybe it looks at the app. component. ts first and sees the setup for the selector property of the @Component with 'app-root' as a value. now the index.html file with app-root in the body can pass along the app.component.html file which is what displays!
+
+Video 3-Components are Important Components are key feature in Angular. You build your whole applicaiton by composing it from components, which you create on your own. You start with the app/root component. We nest or add our other components to this app/root. Angular apps are built from different components, each component has it's own template, html, maybe styling, and business logic. So you can easily reuse different parts without having to scrunch all the html/styling/script into one page. easier to change, update, exchange, and reuse this way.
+
+Video-4 - Creating a New Component In this video we created our own component called server. WE did this by creating a new folder in the "app" folder. we nnamed this folder "server" in this folder we created first, the new server.component.ts file where we first: Import { Component} from angular with "from '@angular/core'; then we use the component decorator @Component and use the selecotr to pick "app-server", and then another importnat part is picking the "templateUrl: and this is a file we create as a template which is an html file: server.component.html for this component. NExt we export class ServerComponent { so that it can be used elsewhere. Then in order to use it, we must go then to the app.module.ts where he shows us how to use it in the next video.
+
+Video 5- Understanding the Role of AppModule and Component Declaration Angular uses components to build webpages and modules to package them together to use. Bundling functionalities of our apps and gives Angular the information on which features to have and use. It;s also an empty Typsecript class we can transform into someting else by using a decorator, the @NgModule decorator which is also imported from @angular/core. We need to tell angular that the new server.component exists, we do that by registering it with the @NgModule under the declarations as ServerComponent, which we named. Now it knows it exists but that is not enough, typescript wouldnt know where to find it. so we have to use an Import at the top of the app.module.ts file we are already in with: import { ServerComponent} from './server/server.component';
+
+Video 6- Using Custom Components We can create a new custom component manually or automatically. This is off memory because my system wasnt working right when i was doing it. Manually we riht click on the app folder then create a new folder with the name of the compnent. THen we create a ts file and html file. then link those in the module? Ill have to dig back into this part we add the tag with the component name in the index.html.
+
+Video 7- Components with the CLI & Nesting Components IN this viedo we learned how to automatically create a component and all the neceassry core files for it: name.component.ts,name.component.htmt, name.component.css. And how to nest them inside each other. We have the server component nested in the app component and the servers component is nested in the server component.
+
+Video 8- Working with Component Templates He shows how to use templates directly instead of linking to an "External" html file and in this example he uses the . but said you usually would use an external. I don't understand the point of this or how it's even related. I see the as a link that points to another spot. Which is i guess what the external link. you also change the @Component property "templateUrl" to just "template":. So is the called a template?
+
+Video 9- Working with Component Styles He show show you style using the external but corresponsing component.css file. in the component.ts file and also how you do it inline. so instead of styleUrl: ./location, you can do inline with styles: [h3 { color:dodgerblue}] same rules apply. if there are alot, use external. if not, inline is fine and overwrites everything else
+
+Video 10- Fully UNderstanding the Compnent Selector You don't have to use the template selector im not sure what's it ca;led but you can also use an attribute of an element selector by using square brackets and naking the corresponding attribute in an element, or you can use a class using a period. i didn't fully understand this. Video 11- Component Basics PROBLEM. SOLVED
+
+Video 12- Solved Probelm above
+
+Video 13- What is Databinding? So far we have only used static data to output. Databinding is communication between the template(HTML) and the Tyscript file/Business Logic. He mentions there are about 4 types of databinding. Google definition of databinding: Data binding is a feature of Angular that allows you to synchrnize the state of your application with the DOM. This means that when you change the state of your application, the DOM will automatically be updated, and vice versa. There are two types of data binding in Angular: Property Binding:allows you to bind the value of an Angular Property to an HTML attribute. AND Event binding: allows you to bind an Angular Event to an HTML event handler.
+
+Video 14- String Interpolation I only wrote down the coded along stuff. Google def for String Interpolation: String Interpolation is a ONE WAY DATA BINDING technique that is used to transfer data from a TypeSCript code to an HTML template(view). It uses the template expression in DOUBLE CURLY BRACES to display the data from the component to the view. String Interpolation adds the value of a property from the component to the HTML template view. Syntax is {{component-property }}
+
+Video 15- Property Binding- (this is where it gets super confusing and have alot of questions or redo it) I coded along and took notes for this particular codealong but it wouldnt made sense here without context to me re-reading it. So i am going to google this. basically in the code we added a button on the html and then a property or method? in the export class of the servers.ts file, allowNewServer = false; then a constructor with a timeout. I am completely lost at this ppooint but we bind that with the disabled aspect of the button?. Google def of Property Binding in Angular. " : Property binding in angular is one of the approachs you can use to set the property of an alement in the view to a property defined in the component, You can use property binding to set attributes such as class, href, src, textContent, etc. Properties of custom components and directives can also be set using property binding. Angulars built in directives manage forms, lists, styles, and what users see.
+
+In more practivcal terms , p,roperty binding helps us pass data from component typescript class (component.ts) and provide the value rendered in the HTML template(component.html)---i rewatched the video and paused several times to grasp this concept. IN my own words i will try to explain it. In this instance we are binding a property of an export class in the components ts file--server.component.ts--i believe the property in this case is a new property we create called "allowNewServer" that we set to equal false. My questions are :
+
+QUESTION: In this property binding, i assume the property being boudn in this case is the "allowNewServer" which is just equal to false. Are it and the constructor directly related? The semi-colon as me think they are not. SO then the constructor runs the setTimeout function which then changes allowNewServer to true after 2 seconds. The square brackets around the disabled attribute on the corresponding html's button is equal to the "allowNewButton" and the ! before it makes it the opposite. So i believe that the disabled is still default,,,and even if it wasn't---IT IS DISABLED BECAUSE THE !allowNewServer os set to false where the ! reverses it. So disabled is a true. when it runs, it sets it to true in the ts, but the ! makes it disabled is false....make it then enabled allowing us to click it.
+
+TS export class ServersComponent implements OnInit { allowNewServer= false; constructor() { setTimeout(() => { this.allowNewServer=true; }, 2000); }
+
+HTML <button class="btn btn-primary" [disabled]="!allowNewServer">Add Server
+
+VIDEO 16- Property Binding Vs String Interpolation here we are outputting the status of the allowNewServer property of the servers.component.ts to the correspding html file. First we do it with STRING INTERPOLATION LIKE THIS:
+
+{{allowNewServer}}
+
+
+That seems straight forward. But then we have property binding where we are binding the property [innerText] of the
+element like this and i dont fully grasp innerText used like this:
+
+He goes on to say use String interpolation when we are trying to print text to the html or outout something. If we are trying to manipulate elements to use property binding.
+VIDEO 17- Event Binding we want to output the value of a property. We create this proeprty in the export class Servers Component of the corresponding ts file under the allowNewServer property as: serverCreationStatus='No server was created" which is going to be output in the html file with string interpolation
+
+{{serverCreationStatus}}
+
+. Then we add a method property to the export class in TS FILE : onCreateServer() { this.serverCreationStaus= 'Server was created!'; }
+Which is creating a method that when run, will basically take the original value for serverCreationStaus which is 'No Server was created" and reassign in the string value "Server was Created". It does this by binding the method onCreateServer() to the event (click) in the button. WE use paranthesis to denote event binding around the event we are binding. It looks like this in the html: <button class="btn btn-primary" [disabled]="!allowNewServer" (click)="onCreateServer()"
+Add Server
+
+So when this event happens it runs the method which changes the value and then displays that value with string interpolation back into the html!
+
+Video 18- Passing and Using Data with Event Binding We start this video by adding a label tag at the top above the button and then a new input tag below that with a type text and bootstrap class form control and then still within that we use event binding on the input itself and set it to "onUpdateServerName($event)" which is a method we have not created yet; and one of the main aspects of this is the "$event" which is passing as an argument whatever gets entered in during the event I believe, then right below all that for the input we put a new paragraph with string interpolation for {{serverName}}. Here it the html: Server Name
+
+<input type="text" class="form-control" (input)="onUpdateServerName($event)" />
+
+{{ serverName }}
+
+<button class="btn btn-primary" [disabled]="!allowNewServer" (click)="onCreateServer()"
+
+Add Server
+
+{{ serverCreationStatus }}
+
+i'm in the servers component
+
+On the ts file under the export class with the new variable names up top we add serverName set to an empty string and below we are creating the new method we created in the html where we are set a parameter as event:any. and the code being run is then setting this.serverName variable to the value of the target of the event of the HTML ELEMENT we are using. It looks like this: with all the current code before this excluded for space.
+
+serverName='';
+
+onUpdateServerName(event:any) { this.serverName=(event.target).value;
+
+} } So not only does this output every character typed directly below it with the
+
+string interpolation, each character is being logged as a value in the target of the event which you can see if you console log it.
+
+Video 19- Two WAy Data Binding
+
+WE start this video by copying and thencommenting out the current entire input element in the html. then paste it below and remove the (input) event binding. We are instead going to two way bind it by useing an event binding inside of a property binding and putting ngModel in there and have it equal to serverName.
+
+MY QUESTION: HE did not mention or i missed it that you then have to import the form module from angular in the app.module.ts. and also add it to imports under ngModule decorator there as well then it works. I am also not quite sure how this automatically knows it's relationship with the onUpdateServerName method in the ts file because it only references server name. So i guess this ngMOdel bypasses that and updates it directly back and forth?
+
+VIDEO 20- Combining al forms of databinding here he commetns out the
+
+that has the string interpolation. because we want the name to only appear after we have entered the whole name, not every character appearing as typed. We do this by going back to the onCreateServer method and instead of just saying "server was created" we add ' Name is ' + this.serverName;
+
+Video 21 and 22- Assignment Data and Event Binding 1.Add a Input field which updates a property ('username') via Two-Way-Binding 2.Output the username property via String Interpolation (in a paragraph below the input) 3.Add a button which may only be clicked if the username is NOT an empty string 4. Upon clicking the button, the username should be reset to an empty string
+
+HTML <input type="text" class="form-control" [(ngModel)]="username" />
+
+{{ username }}
+
+<button class="btn btn-primary" [disabled]="username === ''" (click)="username = ''"
+
+Reset Username
+
+TS }) export class AppComponent { username:string=""; allowNewUsername= false //dont even think i need this per watching his solutions video
+
+}
+
+Video 23- Understanding Directives
+
+Video 24- Using ngIf to output data conditonally
+
+-using the project template from before We comment out the
+
+we were using to output data. We want to conditonally show a message. we do that with ngif. we always put a star before the ngif. <p *ngIf="serverCreated"> words!
+
+Its a structural directive meaning it will or will not change the structure of the DOM. in this example we go to TS file and create a variable named serverCreated=sales, then add a value to the method below onCreateServer, as this.serverCreated=true. so that when its run, it turns to true.
+HTML <button class="btn btn-primary" [disabled]="!allowNewServer" (click)="onCreateServer()"
+
+Server Was Created, server name is {{ serverName }}
+
+TS serverCreated= false;
+
+constructor() { setTimeout(() => { this.allowNewServer=true; }, 2000); }
+
+ngOnInit(): void { }
+
+onCreateServer() { this.serverCreated=true; this.serverCreationStatus= ' Server was created! Name is '+ this.serverName;
+
+So here the ngIf is conditionally adding the paragraph if "serverCreated"=true. as we can see in the TS, it is set to false natively. When we click the button with our event listener (click) as seen on line 183, it runs the method onCreateServer(), which changes serverCreated to true, thus creating the paragraph as where before it did not exist. Structurally changing the DOM.
+
+Video 25- Enhancing ngIf with an else condition
+
+Pasting the change in code from just the *ngIf statement. I will explain what we did.
+
+Server Was Created, server name is {{ serverName }}
+
+<ng-template #noServer>
+
+NO server was created!
+
+//so we an an else with a semi colon after the *ngIf="variable; else REFERENCENAME"> then we add the else potential paragraph with this below the nfif element.
+
+///the ng-template is used and then a local reference symbol that must also help tie the two? But then we have a varibale we name only in order to tie back to the nfif above. So if else, it will add whatever content we want. in this case the paragraph with "No Server was Created"
+
+Video 26- Styling Elements Dynamically with ngStyle
+
+ngStyle is an attribute directive. Unlike structural directive is does not add or remove elements but just changes ones that are already there, conditionally. We do it like this:
+
+[ngStyle]="{backgroundColor:getColor()}'>
+
+where ngStyle is the attricbute directive and we are wrapping it in a property binding for which i do not know. I tried removing the square brackets/property binding from the ngStyle and it took away everything but the label above, the input box and the button. So i put it back. He mentions the brackets are not a part of the ngStyle but that we are "binding a property of the ngStyle" which makes no sense at all to me, then how is it not a part of it if it doesnt work without it? Then we have = quotation marks, squiggly bracket to show a key value pair? then an attribute backgroundColor: a method to determine the color. THen we define that method in the TS file: Here the constructor is givis us a random serverStatus based on Math.random if it's greater than .5 it's online. if not it's offline denoted by the ? ' ' : ' ' then the getCOlor method below is just saying return severstatus online ? show green if not : red/
+constructor() { this.serverStatus=Math.random() > .5 ? 'online':'offline'
+}
+
+getServerStatus() { return this.serverStatus; //not new } getColor() { return this.serverStatus==='online' ? 'green' : 'red'; } }
+
+Video 27-Appying CSS Classes Dynamically with ngClass
+
+so we add ngClass into our element that we did the ngStyle with. we add a class into our @Component decorator in the ts file and that proeprty is a class TS FILE under component decorator @Component
+
+styles: [.online { color:white; }] HTML [ngClass]="{online:serverStatus==='online'}"> ///i dont quite get the point of this one.
+
+Video 28- Outoutting Lists w ngFor
