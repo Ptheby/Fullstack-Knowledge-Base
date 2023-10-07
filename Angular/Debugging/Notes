@@ -1,1 +1,8 @@
+Video 1 - Understanding Angular Error Messages
+ in this video we looked at the content of the error messages. Look for keywords to know what to look for in what file. in this case it was an issue with a push
+and we found that there was no array assigned to the variable therefore nothing to be able to push anything into
 
+Video 2- Debugging Code in the browser using Sourcemaps
+
+I did not find much value in this as i could not manually locate the code within the thousands of lines i had in my main.js and then also i did not have webpack listed
+as a source under the other sources like he did
