@@ -1,1 +1,17 @@
+I did not save the notes and takeways from the first three videos. I had them typed up or possibly wrote them elsewhere and i will find out. 
 
+
+
+Video 4-Binding to Custom Properties
+We started in the server element component.html file where we see that it is trying to access a variable named "element" but the element is not defined in our server-element ts file yet. 
+sp we go to the ts file and create that.
+in the TS file under export class ServerElementComponent we create it like  like as a JS object
+element:{type:string,name:string,content:string}
+
+then in the app.component.html where we add <app-server-element>which we are going to have loop through the serverElements like this:
+<app-server-element
+*ngFor="let serverElement of serverElements"
+[element]="serverElement"
+></app-server-element>
+Where we are using the structural directive *ngFor to loop through the <app-server-element> where we are assigning a variable "serverElement" to be created for each item in the serverElemnts array and log it? 
+and then we are property binding the element property object we created and having it equal or vice versa the new serverElement for each iteration?
