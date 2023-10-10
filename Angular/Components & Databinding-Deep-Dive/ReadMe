@@ -42,6 +42,27 @@ Video 6- Binding to Custom Events
 
 So much information that i cant quite comprehend what happened apart from using an @Output and an imported "EventEmitter".
 
+Video 7- Assigning an Alias to Custom Events
+ this works the same as property binding alias where in the @Output() before the property....we put the alias in the paranthesis and then that property will only be know as the alias outside the component. 
+
+Video 8-Property and Event Binding Summary
+
+Video 9- Understanding View Encpapsulation
+What i took away from this is that CSS only works in the relative components they are in. I watched this video a few times. Each element has it's own shadow dom as you can see while
+inspect as the elements we are trying to style are given other attributes assigned by ANgular. Why it does this instead of just letting it work on whatever element we want like a
+<p>, i am not sure. I will google it:
+"Angular assigns a shadow DOM element instead of just an element because it allows you to encapsulate your component's code and styles, making it easier to maintain and test. The shadow DOM is also isolated from the rest of the page, which can help to prevent conflicts and security vulnerabilities."
+
+Video 10- More on encapsulation
+
+Here we learn that the natural encapsulation by Angular can be overwritten by including "encapsulation" under @Components where 
+encapulation: ViewEncapsulation.Emulated is the default so no need to add but you can also use
+encapsulation: ViewEncapsulation.none so that any style listed in this css file will now be applied globally. 
+
+
+Video 11- 
+
+
 
 
 
