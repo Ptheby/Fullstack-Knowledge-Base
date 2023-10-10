@@ -15,3 +15,65 @@ then in the app.component.html where we add <app-server-element>which we are goi
 ></app-server-element>
 Where we are using the structural directive *ngFor to loop through the <app-server-element> where we are assigning a variable "serverElement" to be created for each item in the serverElemnts array and log it? 
 and then we are property binding the element property object we created and having it equal or vice versa the new serverElement for each iteration?
+
+
+Video 5- Assigning an Alias to Custom Properties
+in the prior vide we learned how to bind to our own customer properties, in this case "element" in our server-elemt ts file, that we end up using in the <app-server-element>
+in the app.component.html file. Where we bind to it with square brackets BUT NOT BEFORE we add @INPUT () back at the server-element ts file BEFORE element. like this:
+ @Input() element:{type:string, name:string,content:string};
+
+this allows us to bind to our custom, made-up property element. 
+
+
+now for video 5. Sometimes we want to name a property something else if we are outside of that compenent so that it might be more descriptive or let us know maybe where it came from.
+Like in this case, "element" might not tell us where it came from so maybe in the app component html we want to definitely let everyone know this came from the server-element-component.
+so we want to do this at the app.component.html:
+
+ <app-server-element
+*ngFor="let serverElement of serverElements"
+[srvElement]="serverElement"
+
+but as of right now Angular does not know what "srvElement" is. We can assign this alias by going BACK TO THE server-element.component.ts file and pass this "alias name" as an argument
+in the @Input('srvElement')
+after we do this, now outside the component (or maybe in as well) element alone will not work it has to be srvElement. 
+
+
+Video 6- Binding to Custom Events
+
+So much information that i cant quite comprehend what happened apart from using an @Output and an imported "EventEmitter".
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
