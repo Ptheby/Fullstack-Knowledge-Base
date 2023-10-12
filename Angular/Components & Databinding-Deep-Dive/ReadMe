@@ -60,17 +60,78 @@ encapulation: ViewEncapsulation.Emulated is the default so no need to add but yo
 encapsulation: ViewEncapsulation.none so that any style listed in this css file will now be applied globally. 
 
 
-Video 11- 
+Video 11- Using Local References in Template
+in the cockpit component so far we have been using two way databinding so that we pass along what we input so that it updates our serverName variable and displays it. Since we only need this 
+when it is clicked a simpler method would be to use local referencing which can be used on any element we want not just input like two way databinding. to do that we take this:
+
+<input type="text" class="form-control" [(ngModel)]="newServerName">
+and
+<button class="btn btn-primary" (click)="onAddServer()">Add Server</button> ----
+
+to this:
+
+<input type="text" class="form-control" #serverNameInput>
+and
+<button class="btn btn-primary" (click)="onAddServer(serverNameInput)">Add Server</button> ----
+
+and we also then write the corresponding TS code like this: 
+ onAddServer(nameInput:HTMLInputElement) {
+    console.log(nameInput.value)
+    this.serverCreated.emit({
+      serverName: nameInput.value,
+      serverContent: this.newServerContent,
+    });
+
+where we are passing the nameInput:HTMLInputElement as an argument which co-incides with my serverNameInput in the html, and then we assign serverName to that input value within that method and emit it. 
+
+Video 12- Getting Access to the template & DOM with @ViewChild
+
+I will explain what we did below: 
+in the html instead of using 2 way binding we use a local reference# and tagged serverContentInput on the input tag element. Then below in the Ts file i will explain how we did this right above the TS CODE
+COCKPIT HTML
+<input
+    type="text"
+    class="form-control"
+    #serverContentInput />
 
 
+Below in the TS code of cockpit, we add @ViewChild and then pass the name of our local reference above so that whatever is input gets put into the TS file as first serverContentInput
+and then below in the onAddServer method where the input.value is saved as the variable serverContent now. Which is then accessible in the event binding in the main app.component. html
+TS
+-export class CockpitComponent implements OnInit {
+   @Output('') serverCreated = new EventEmitter<{
+    serverName: string;
+    serverContent: string;
+  }>();
+  @Output('bpCreated') blueprintCreated = new EventEmitter<{
+    serverName: string;
+    serverContent: string;
+  }>();
+  // newServerName = "";
+  // newServerContent = "";
+  @ViewChild('serverContentInput', {static:false}) serverContentInput: ElementRef;
+
+  constructor() {}
+
+  ngOnInit(): void {}
 
 
+  onAddServer(nameInput:HTMLInputElement) {
+    this.serverCreated.emit({
+      serverName: nameInput.value,
+      serverContent: this.serverContentInput.nativeElement.value
+    });
 
 
+****I must note that asfar as i can tell, the @ViewChild gets placed as an export in the child element    not in the parent element!!!
 
 
+Video 13- Projecting COntent into COmponents with ng-content 
 
+Here we use the <ng-content> directive in the server-element's template to project data from the app.components html.   ng content is a directive used to project content from a parent components
+template from a parent components template into a childs component's template. 
 
+Video 14- Understanding the COmponent Lifescycle 
 
 
 
