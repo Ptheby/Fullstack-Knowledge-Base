@@ -135,6 +135,36 @@ Video 14- Understanding the COmponent Lifescycle
 
 
 
+Assignment- Game Stopwatch
+
+HTML
+In the game control component html i created two buttons , one to start and one to pause. they both have event listeners in them on the 
+click event. with the methods "onStartGame()" and "onPauseGame()". 
+TS-game-control-component
+in this file we inport OnInit, EventEmitter,Output from angular/core
+
+
+then under export class i  @Output() intervalFired variable that is set to a new EventEmitter<number>() method. 
+
+we also delcare interval variable, lastNumner to 0
+then the constructor and ngOnInit then we write the methods we used int he html
+
+
+this.interval which is nothing to setInterval built in method to emit intervalfired as the lastNumber which is naturally 
+set to 0 ,,then +1. ; then we inrcrement lastNumber++. every 1000 milliseconds 
+
+the onPauseGame() {
+clearInterval(this.interval) which pauses the interval .
+
+I'll come back to this. to describe more. i can understand it as written but i cant come up with this stuff on my own yet. 
+
+
+
+
+
+
+
+
 
 
 
