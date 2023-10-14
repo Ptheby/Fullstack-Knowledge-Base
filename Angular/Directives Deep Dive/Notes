@@ -107,22 +107,132 @@ then in ngOnInit ,,and im not sure why this is here but here i where we run the 
   }
 }
 
-
+where setStyle is used to set the style!
 we then add the new selctor appBetterHighlight to a new p in the html. 
 
 
+Video 6- Using HostListener to Listen to Host Events
+
+
+Below we import HostListener and then use @HostListener directive within ngOnInit twice. first we pass 'mousenter' as an argument which is 
+a built in hostlistener, and call it mouseover, and when that happends we style the background to blue with the renderer.setStyle to this elRef.nativeElement
+
+and in the other we pass the argument for mouseleave, another built in hostlistener event, and name it mouseleave and then style that baackground transparent
+
+import { Directive,Renderer2, OnInit, ElementRef, HostListener } from '@angular/core';
+
+@Directive({
+  selector: '[appBetterHiglight]'
+})
+export class BetterHiglightDirective implements OnInit {
+
+
+  constructor(private elRef:ElementRef, private renderer: Renderer2) { }
+
+  ngOnInit() {
+    // this.renderer.setStyle(this.elRef.nativeElement, 'background-color', 'blue', );
+  }
+  @HostListener('mouseenter') mouseover(eventData: Event) {
+    this.renderer.setStyle(this.elRef.nativeElement, 'background-color', 'blue', );
+  }
+  @HostListener('mouseleave') mouseleaver(eventData: Event) {
+    this.renderer.setStyle(this.elRef.nativeElement, 'background-color', 'blue', );
+  }
+
+}
+
+
+Video 7- Using HostBinding to bind to the host properties
+
+we import and then export @HostBinding(), where we pass the proeprty we want to ccess of the element we are wanting to manipulate
+in this case the style and then the backgroundColor style. and we are basically just setting a starting point
+@HostBinding('style.backgroundColor') backgroundColor:string= 'pink'. Where when we hover over it it still changes to blue from
+hostlistening and then transparent when mouseleave!
+
+})
+export class BetterHiglightDirective implements OnInit {
+  @HostBinding('style.backgroundColor') backgroundColor:string='pink'
+
+
+  constructor(private elRef:ElementRef, private renderer: Renderer2) { }
+
+  ngOnInit() {
+    // this.renderer.setStyle(this.elRef.nativeElement, 'background-color', 'blue', );
+  }
+  @HostListener('mouseenter') mouseover(eventData: Event) {
+    // this.renderer.setStyle(this.elRef.nativeElement, 'background-color', 'blue', );
+    this.backgroundColor='blue';
+  }
+  @HostListener('mouseleave') mouseleave(eventData: Event) {
+    // this.renderer.setStyle(this.elRef.nativeElement, 'background-color', 'transparent', );
+    this.backgroundColor= 'transparent';
+  }
+
+}
+
+
+Video- 8 Binding to Directive Properties
+Below we are inputting defaultColor and highlightColor where we can then bind to those properties in the html element that we are 
+using this directive ( the appBetterHighlight like this:
+<p appBetterHiglight [defaultColor]="'yellow'" [highlightColor]="'red'">Style me with better directive</p>
+where we are binding the defaultColor and setting it yellow even tho in the directive itseelf it is transparent, we are setting the background color to the default color in the Hostlistener.
+this way someone can change those without having access to the direct itself. 
+
+
+})
+export class BetterHiglightDirective implements OnInit {
+  @Input () defaultColor:string= 'transparent';
+  @Input () highlightColor:string= 'blue';
+  @HostBinding('style.backgroundColor') backgroundColor:string;
+
+
+  constructor(private elRef:ElementRef, private renderer: Renderer2) { }
+
+  ngOnInit() {
+    this.backgroundColor=this.defaultColor;
+    // this.renderer.setStyle(this.elRef.nativeElement, 'background-color', 'blue', );
+  }
+  @HostListener('mouseenter') mouseover(eventData: Event) {
+    // this.renderer.setStyle(this.elRef.nativeElement, 'background-color', 'blue', );
+    this.backgroundColor= this.highlightColor;
+  }
+  @HostListener('mouseleave') mouseleave(eventData: Event) {
+    // this.renderer.setStyle(this.elRef.nativeElement, 'background-color', 'transparent', );
+    this.backgroundColor= this.defaultColor;
 
 
 
+he also sets an alias to highlightColor. yada yada
+
+Video 9- What happends behind the scenes on structural directive
+
+the * indicidates its a structural directive. nicer way for us to use them  bhind the scenes angular will transform them into 
+something else. 
+so this :
 
 
+ <!-- <div *ngIf="!onlyOdd">
+          <li
+          class="list-group-item"
+          [ngClass]="{odd: even % 2 !==0}"
+          [ngStyle]="{backgroundColor: even % 2 !== 0 ? 'yellow' : 'transparent'}"
+          *ngFor="let even of evenNumbers">
+          {{even}}
+        </li>
+        </div>
 
 
+is this same as this:
 
-
-
-
-
+    <ng-template [ngIf]="!onlyOdd">
+          <li
+          class="list-group-item"
+          [ngClass]="{odd: even % 2 !==0}"
+          [ngStyle]="{backgroundColor: even % 2 !== 0 ? 'yellow' : 'transparent'}"
+          *ngFor="let even of evenNumbers">
+          {{even}}
+        </li>
+        </ng-template>
 
 
 
