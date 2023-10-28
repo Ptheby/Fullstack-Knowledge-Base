@@ -1,1 +1,93 @@
+Starting these notes @ video 5 of the Angular Forms Video Series:
+Video 5- TD: Creating the Form and Registering Controls
+
+We create the form in the html of the component we are designing. Angular knows and gives certain characteristics only available to forms by IMPORTING the forms module at the app.module.ts
+We register the controls by going to the inputs we want as controls and adding the directive ngModel. We also add right after this a name="username" or whatever name we are using for that input. 
+We also do that with the <select> element because it is also a type of input and one we want to register
+
+Video 6: TD: Submitting and Using the Form
+
+- in the prior lecture we configured our form and added controls to certain inputs my placing ngMOdel on them and then naming them. In this video we make this submitttable so we can actually
+see what the user entered. 
+First we go to the app.component.ts file and add a new method we name onSubmit(). Instead of placing this method on a (click) event listener like i would assume, we take advantage of
+Javascript/HTML's submit button and Angular does as well by placing a directive (ngSubmit)=onSubmit() in the form element. 
+To test if this works we add a console log to the onSubmit method in the ts ('Submitted!") and it does log when we press the submit button.
+
+Now to get access to the data that is entered in the form we go back to the template and we add a local reference with a custome name in this case #f, and then pass f into the onSubmit(f) method 
+at the form element. and we then do this to the actual method in the ts file :
+onSubmit(form:ElementRef) {
+console.log(form)
+
+When we submit this, it does show a form object and some weird stuff in the console but we want the actual values. 
+
+To get the actual values we have to set the local referemce to ngForm like this  #f="nfForm" which tells Angular to give us access to the form automatically. so now we 
+go remove the ElementRef in the actual method at ts and add ngForm. like this: 
+}
+  onSubmit(form: NgForm) {
+    console.log(form)
+  }
+}
+and the HTML looks like this: 
+
+  <form (ngSubmit)="onSubmit(f)" #f="ngForm">
+
+Now when we submit data, we can scroll down to values and see the "name" we created after the ngMOdel of each input paired with the value entered and submitted by the user!
+
+Video 7- TD Understanding Form State
+ We did not code in this video but he shows alot of the properties of the JS object that is created by the form that we created through Angular. He touched on the dirty proeprty which
+would show true if an input was changed, touched would show true if one was clicked on and it shows many others all related to the form. 
+
+Video 8 TD: Accessing the Form with @ViewChild
+
+Here we access the form with @ViewChild instead of passing the #f through the onSubmit() at the form element. So we take out the f parameter there at the onSubmit(f),
+ and then on the ts file we comment out that onSubmit(form:Ngform) and instead at the @Viewchild decorate right at the start of the export class Appcomponent, which also imports it above
+and then we pass 'f' as an argument and then name a variable signupForm: NgForm: which also is imported...then below we created another onSubmit with no argument and simply 
+console log this.signupForm. Submitting this yields the form in the cosole. it looks like this: 
+
+TS:
+export class AppComponent {
+  @ViewChild('f') signupForm: NgForm;
+  suggestUserName() {
+    const suggestedName = 'Superuser';
+  }
+  // }
+  // onSubmit(form: NgForm) {
+  //   console.log(form)
+  // }
+  onSubmit() {
+    console.log(this.signupForm)
+
+HTML: 
+ <form (ngSubmit)="onSubmit()" #f="ngForm">
+
+Video 9
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
