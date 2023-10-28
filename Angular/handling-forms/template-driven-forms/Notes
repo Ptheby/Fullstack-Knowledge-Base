@@ -60,15 +60,75 @@ export class AppComponent {
 HTML: 
  <form (ngSubmit)="onSubmit()" #f="ngForm">
 
-Video 9
+Video 9- Adding Validation to check user input
+In this video to add simple validation to our template driven approach, we add in the template on each input we are wanting to simply validate, we add the required keyword, and then we also add "email" also on the
+email input form. these add directives to those input and gives it functionality for validation. In this case when we inspect the app if we have info in those fields and a word@email.com on the email, it will show true on the valid property 
+of my form object in inspect or else it will show false. WE can also see on inpsect that depending on what we have entered, angular is adding ng-classes to our form(CSS)
+
+Built-In Validators & Using HTML5 Validation-webiste https://angular.io/api/forms/Validators 
+ 
+Video 10- Using the Form State
+
+here we add some styling so that if a input box is touched and nothing valid is entered, a red border will surround the input showing that there needs to be action there. We do this with the input then ng-invalid and ng-touched
+classes in the css file all together like this.
+CSS
+}
+input.ng-invalid.ng-touched {
+border: 1px solid red;
+}
+
+Video 11- Outputting Validation Error Message
+
+HTML
+right below the input for the email we enter this:
+<span class="help-block" *ngIf="!email.valid && email.touched">Please enter a valid email!</span>
+
+this is adding a statement conditional on the email being invalid and not touched. If those two conditions are met it dispales the message. In this case it only worked for me when i had !email.valid. Adding the email.touched did not work. 
+we also had to add the a local reference #email to the input element of ngModel to then use that email. above. #email='ngMOdel'
 
 
+Video 12- Set DEfault Values with ngModel Property Binding
+  
+HTML
+ <select
+          id="secret"
+          class="form-control"
+          [ngModel]="defaultQuestion"
+          name="secret">
+            <option value="pet">Your first Pet?</option>
+            <option value="teacher">Your first teacher?</option>
+          </select>
+TS
+export class AppComponent {
+  @ViewChild('f') signupForm: NgForm;
+  defaultQuestion='pet'
 
+Here on the select the secret question element/input we are property binding to the ngMOdel and setting it to the new "defaultQuestion" variable we created in the TS. In the ts we create this vriable name and set it to "pet" which
+is the option value that says "Your first pet?"    thus that will automatically get displayed by deafult until the user chooses something else.
 
+Video 13
+Using ngModel with two way binding
 
+HTML
+<div class="form-group">
+          <textarea
+          name="questionAnswer"
+          class="form-control"
+          rows="3"
+          [(ngModel)]="answer"
+          ></textarea>
+        </div>
+        <p>Your reply : {{answer}}</p>
+TS
+export class AppComponent {
+  @ViewChild('f') signupForm: NgForm;
+  defaultQuestion='pet';
+  answer="";
 
-
-
+Here we demostrate two-way databinding by creating a new textarea inside a new div that we can enter an answer to the secret question
+where we also use 2 way bound [(ngModel)]to bind it to a new variable we create in the TS as answer equals an empty string.
+Whatever is entered into this new text area, will be assigned to "answer" then we use string interpolation to display it right blow the text
+area in a new <p>
 
 
 
