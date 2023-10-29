@@ -78,15 +78,188 @@ Now when we submit it will show valid true or false depending on if its filled o
 
 
 
-Video 7-
+Video 7- Getting Access to Controls
+
+==in this lecture we want to display a message below two inputs and then at the form level as well. 
+
+we add a span element right after the input closing bracket and in that we use *ngIf. Where we also use the get method on the form to access the username and check if its valid or actually NOT 
+valid and then also if its been touched. My message will display if its invalid and has also been touched. And then at the form level we remove the get() because we only want to check if the whole form is valid not each individual input control. 
+
+====for the EMAIL 
+<input
+            type="text"
+            id="email"
+            formControlName="email"
+            class="form-control">
+            <span
+            *ngIf="!signupForm.get('email').valid && signupForm.get('email').touched">
+Please Enter a Valid Email
+            </span>
+====For the FORM
+</div>
+        <span
+        *ngIf="!signupForm.valid && signupForm.touched">
+Please Complete Form!
+        </span>
+
+Video 8- Grouping Controls
+
+---now we mentioned that the get() can also take not just a name of a contriol but a path in case our controls are nested like in a Form Group. So we will lump our username and email into a new FormGroup within the signupForm group in order to show this. We start by in our TS file by creating a new control on the signupForm
+called userdata and then cutting and pasting the username and email controls into that like this:
+
+ngOnInit(): void {
+    this.signupForm = new FormGroup({
+      'userData': new FormGroup({
+        'username': new FormControl(null, Validators.required),
+        'email': new FormControl(null,[Validators.required,Validators.email])
+      })
+     ,
+      'gender': new FormControl('male')
+    }); 
+
+====then we wrap a new div around the two inputs in our template and on that div we add a formGroupName="userData" to sync that and then in our two *ngIfs we must add userData with a period before the input names like below. Now it will work again!
+
+<div formGroupName="userData">
+          <div class="form-group">
+            <label for="username">Username</label>
+            <input
+              type="text"
+              formControlName="username"
+              id="username"
+              class="form-control"
+            />
+            <span
+              *ngIf="
+                !signupForm.get('userData.username').valid &&
+                signupForm.get('userData.username').touched
+              "
+            >
+              Please Enter a Valid Username!
+            </span>
+
+
+Video 9- Arrays of Form Controls 
+
+WE start this out in the template by creating a new div with an h4 for Your Hobbies. then a button with a click event listener that runs the method onAddHobby. 
+What we are doing is creating a new hobbies control array in the TS file and we do that with  'hobbies'= new FormArray([]) and initialize it with the empty brackets. Then we actually create the new form control object in the onAddHobby method with    const control= new FormControl passing null as the default value, and Validators.required as the validator. we then use it in the method to push whatever is entered onto the new hobbies array. There is more to this that i dont understand and cant spend the time on it now. 
+
+====HTML====
+ <div formArrayName="hobbies">
+          <h4>Your Hobbies</h4>
+          <button class="btn btn-default" type="button" (click)="onAddHobby()">
+            Add Hobby
+          </button>
+          <div class="form-group"
+          *ngFor="let hobbyControl of getControls(); let i = index">
+            <input type="text" class="form-control" [formControlName]="i">
+          </div>
+
+====TS====
+'hobbies': new FormArray([])
+
+getControls() {
+    return (<FormArray>this.signupForm.get('hobbies')).controls;
+  }
+
+ onAddHobby () {
+    const control = new FormControl(null, Validators.required);
+    (<FormArray>this.signupForm.get('hobbies')).push(control);
+  }
+
+
+Video 10- Creating Custom Validators
+ I was quoite lost on this one.
+First we create a new variable under export in TS   forbiddenUsernames: ['Chris','Anna']
+
+then below we created this function to  run through the index of Forbidden user names again 
+
+I may call on this one later: We add our new validaotr below to the username validators. ====='username': new FormControl(null, [Validators.required, this.forbiddenNames.bind(this)]),
 
 
 
+forbiddenNames(control:FormControl): {[s:string]:boolean} {
+     if (this.forbiddenUsernames.indexOf(control.value) !== -1) {
+      return {'nameIsForbidden':true};
+     }
+     return null;
+  }
 
 
 
+Video 11- Using Error Codes
 
 
+ <input
+              type="text"
+              formControlName="username"
+              id="username"
+              class="form-control"
+            />
+            <span
+              *ngIf="
+                !signupForm.get('userData.username').valid &&
+                signupForm.get('userData.username').touched
+              "
+              class="help-block">
+              <span *ngIf="signupForm.get('userData.username').errors['nameIsForbidden']">This Name is Invalid</span>
+              <span *ngIf="signupForm.get('userData.username').errors['required']">This Name is Required</span>
+          
+            </span>
+
+
+Video 12- Creating a Custom Async Validator---no idea hes doing way too much here.
+
+ forbiddenEmails(control: FormControl): Promise<any> | Observable<any> {
+    const promise = new Promise<any>((resolve, reject) => {
+      setTimeout(() => {
+        if (control.value === "test@test.com") {
+          resolve({ emailIsForbidden: true });
+        } else {
+          resolve(null);
+        }
+      }, 1500);
+    });
+    return promise;
+  }
+
+Video 13- Reacting to to status or value changes
+
+--there is a form state we can track in general and we can do that in our example by going into OnInit in the TS
+and we caccess our form with this.signupForm.statusChange  OR .valueChange.subscribe(
+                                                               (value)=>console.log(value)
+
+//      this.signupForm.valueChanges.subscribe(
+// (value)=> console.log(value)
+// );
+     this.signupForm.statusChanges.subscribe(
+(status)=> console.log(status)
+);
+
+
+Video 14-  Setting and Patching Values
+
+We can use setValue to set all values to defaults or patchValue to set only certain values to defaults. Then we can use .reset to reset for onSubmit() like below. 
+// this.signupForm.setValue({
+//   'userData': {
+//     'username': 'Paul',
+//     'email': "Paul@test.com"
+//   },
+//   'gender': 'male',
+//   'hobbies': []
+// })
+this.signupForm.patchValue({
+  'userData': {
+    'username': 'Paul',
+   }})
+
+
+  }
+  onSubmit() {
+    console.log(this.signupForm);
+    this.signupForm.reset();
+
+
+Video 15- Assignment- Reactive Forms
 
 
 
