@@ -23,4 +23,29 @@ export class AppComponent implements OnInit {
       'gender': new FormControl('male')
     }); // this is our first basic form created programmatically.!
 
-Video 4
+Video 4- Syncing HTML and FORM
+When we have the element <form> in html with the FORMSMODULE imported into our project in the ts ann app module, Angular is creating a form for us but we dont want it to do that since we have created our own dynamically in the TS with Form Group. so we must tell it that at the form element in HTML. we do that with 
+[formGroup]="signupForm.
+This syncs the form up with the instance of FOrmGroup we created in our ts with the name signupForm.  Now it knows this is the form we are referencing and using but we also need to register the controls in the ts with the inputs in the HTMK and we do that by adding formControlName="username" in each input with the name we created in ts in quotations. 
+
+HTML  
+
+<form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input
+            type="text"
+            formControlName="username"
+            id="username"
+            class="form-control">
+
+TS
+ ngOnInit(): void {
+    this.signupForm = new FormGroup({
+      'username': new FormControl(null, Validators.required), // this is creating controls and their default values which can also be null in my new formgroup
+      'email': new FormControl(null,[Validators.required,Validators.email]),
+      'gender': new FormControl('male')
+    }); // this is our fi
+
+
+
