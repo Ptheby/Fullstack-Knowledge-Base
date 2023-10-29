@@ -47,5 +47,68 @@ TS
       'gender': new FormControl('male')
     }); // this is our fi
 
+Video 5- Submitting the Form
+
+In the template-driven approach had to add the (ngSubmit)="onSubmit()" on the form element and in the reactive approach we actually do the same but we don't have to use a local reference to 
+gain access because we already have access because we created the form in the ts. so we must simply add a console.log to the onSubmit method in the ts like this
+and then when we submit now we can see the object form in the console: 
+HTML
+<form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+
+TS
+onSubmit() {
+    console.log(this.signupForm)
+  }
+
+Video 6- Adding Validation
+
+to add validation to the template driven approach we just had to add the required keyword to the input element in html. We do not do that in the reactive approach, we actualy add it to eh 
+ts file because that is where we are configuring out form. We can add one or more validators at the second location within the parantheses of the new form controls in our new form.
+We do that with the Validator object with a period and then either required or another built in method. And we can add more than one validator like in the emaiol below by using an arrayof validators
+
+:ngOnInit(): void {
+    this.signupForm = new FormGroup({
+      'username': new FormControl(null, Validators.required), // this is creating controls and their default values which can also be null in my new formgroup
+      'email': new FormControl(null,[Validators.required,Validators.email]),
+      'gender': new FormControl('male')
+    }); // this is our first basic form created programmatically.!
+  }
+
+Now when we submit it will show valid true or false depending on if its filled out or filled out correctly. 
+
+
+
+Video 7-
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
