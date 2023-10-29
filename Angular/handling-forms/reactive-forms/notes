@@ -1,1 +1,26 @@
+Video 1- Intro
+Video 2- Reactive Setup
+In this video we start in the TS file because Reactuve Forms apporach is creating the form programmatically. We start by creating a variable to hold our form and in this case we name it
+signupForm= FormGroup   where FormGroup is an angular object thaat represents a group of related form controls. and we must IMPORT the FormGroup at the TS file at @angular/forms
+and also at the app.module. ReactiveFormsModule in @NgMOdel
 
+
+Video 3 Creating a form in Code
+
+First we create a variable in the TS file named signupForm that will be assigned a value of = FormGroup which is an Angular object for forms, that we must import.
+then we implement onInit, and in the ngOnInit we create a new instance of this formgroup to start are form and do that below. and create our first form controls with username,email, gender
+by using the new FormControl keyword which must also be imported and we then set their initial values in paranthesis:
+
+
+export class AppComponent implements OnInit {
+  genders = ["male", "female"];
+  signupForm: FormGroup;
+
+  ngOnInit(): void {
+    this.signupForm = new FormGroup({
+      'username': new FormControl("Default Username"), // this is creating controls and their default values which can also be null in my new formgroup
+      'email': new FormControl(null),
+      'gender': new FormControl('male')
+    }); // this is our first basic form created programmatically.!
+
+Video 4
