@@ -1,1 +1,72 @@
+Video 1 and 2 Are basically INTROS
+
+Video 3- How Does Angular Interact with Backends?
+ We dont access databases directly with Angualr because that would be very insecure allowing others to see our info. Instead we go to a server first and through the use of an API we make those
+requests, fetch and save data, run anayltics and more 
+
+Video 4- Anatomy of an HTTP Request
+Based on his videos :
+ We need th URL otherwise called an API endpoint. Where are we going? <<<URL DEFINITION: A URL (Uniform Resource Locator) is a unique identifier that helps a computer find a resource on a network.>> where we will usually have a domain and a path
+
+THen we will have some kind of HTTP VERB USUALLY : GET, POST, PUT, PATCH and there are a few more. My understanding is that GET is to fetch data, POST is to create or add datam, PUT is simiilar to POST BUT to create or OVERWRITE data aka a new updated list, and PATCH is partial modifications to a resourse. 
+
+THen ther are HEADERS for metadata but this is typically done automaticaly and built in although we can alter it. 
+
+then the BODY of the message which is the data itself and includes the POST,PUT, ETC> VERBS 
+
+Video 5- Backend Firebase Setup
+HEre we basically use our google account to go to Console on the Firebase website adn create and name a new project. WE use REaltime Database option, create Database, then use the URL that is generated in our ANGULAR project. 
+
+
+Video 6- SEnding a POST request 
+
+In this lecture we saw that when we submit a form, with the method OnCreatePost, we pass arguments for postData being a title and content to conincide with the form data.  We are also injecting the value we named http: type HttpClient in this compoenent so we can use the tools it brings into our onCreatePost method. 
+
+So  the body of our method we are aying this.http.post     then passing as arguments in there first the URL or API endpoint of our new firebase database we made for this. WE are also adding a a folder onto it with "/posts", next we are passing the body of content we want to post and we do that with "postData") but  BUTTTTTTTTTTT it will only send this request to post if we subscribe to it otherwise it will not because no one is interested in it.  so we add .subsrcibe and add responseData with a callback function and console log that response data. 
+
+Here is the code as part of the TS file for this example: 
+
+constructor(private http: HttpClient) {}
+
+  ngOnInit() {}
+
+  onCreatePost(postData: { title: string; content: string }) {
+    // Send Http request
+    this.http.post('https://first-test-project-a4b02-default-rtdb.firebaseio.com/posts.json', postData)
+    .subscribe(responseData => {
+      console.log(responseData);
+    });
+  }
+
+
+Video 7 -GETting Data
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
