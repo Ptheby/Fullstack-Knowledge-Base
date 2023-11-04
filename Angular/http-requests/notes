@@ -41,6 +41,118 @@ constructor(private http: HttpClient) {}
 
 Video 7 -GETting Data
 
+Questions: Why do we need to crate a private fetchPosts() method? Why not just the regular one? 
+
+?
+In this lecture we created a private fetchPosts method where we use this.http.get and then JUST THE URL as the only argument because GET requests only need one ARGUMENT and not a second argument which is reservered for a message body because a GET request has no message as it is asking for info not delivering it. 
+So that looks like this: 
+ private fetchPosts() {
+    this.http
+      .get(
+        "https://first-test-project-a4b02-default-rtdb.firebaseio.com/posts.json"
+      )
+      .subscribe((posts) => {
+        console.log(posts);
+      });
+
+------we then add that fetchPost method to the regular fetchPost method like this, and this might be so that whoever has access to the button doesn't have access to the actual code but then why not for the post method?
+Where this fetchPost() is tied to the event click listener in the html on the fetch button. 
+
+onFetchPosts() {
+this.fetchPosts();
+  };
+
+----_THEN we add that same method to the ngOnInit method so that anytime this page loads it actually will fetch our data. So then why have a button at all? 
+Looks like this--
+
+ngOnInit() {
+    this.onFetchPosts();
+  }
+
+When we do this it returns in the console log because of how our methods are set up a javascript object where the key:value pair is a cryptic key and the value is a nested object which ncludes the data we entered for our post.    NOW if we want to save the posts to a variable array, we need to be able to transform the data and we do that in the next lecture with OBSERVABLE OPERATORS.
+
+VIDEO 8- Using RxJS Operators to Transform Response Data 
+
+In this lecture we are inporting the map operator. after the get method we are using a pipe to transform the data and
+we do that by mapping the resonseData and callback method to assign a new array called postsArray and a for loop? to assign a new "key" variable value of every responseData if the responseData has a unique key, then it will push that data onto the new postsArray and we return the new postsArray. 
+============
+.get(
+        "https://first-test-project-a4b02-default-rtdb.firebaseio.com/posts.json"
+      )
+      .pipe(
+        map(responseData => {
+          const postsArray= [];
+          for (const key in responseData) {
+            if (responseData.hasOwnProperty(key)) {
+              postsArray.push({...responseData[key], id:key});
+            }
+          }
+          return postsArray;
+        })
+
+My questions on this are just i need a walk through of this and how it works exactly.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
