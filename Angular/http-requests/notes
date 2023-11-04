@@ -116,20 +116,52 @@ get push post ect we can include angled brackets and then the type of that data.
 .post<{name: string}>(
 
 
-Video 10- 
+Video 10- Outputting Posts
+we use the ngIF  to either post a " NO POSTS" message and an ngIF if there are posts. And if there are posts we use an ngFOR loo to loop through the loadPosts array and then string interpolation to then show that data. All of this going from my app to the firebase db and back to my app. 
+
+  <p *ngIf="loadedPosts.length < 1 ">No posts available!</p>
+      <ul class="list-group" *ngIf="loadedPosts.length>=1">
+        <li class="list-group-item" *ngFor="let post of loadedPosts">
+          <h3>{{post.title}}</h3>
+          <p>{{post.content}}</p>
 
 
 
 
+Video 11- Showing a Loading Indicator
+Here we first create a new variable in TS file of "isFetching" and set it to false. we then take that and put it in our private fetchPosts method and set it to true, and then add it to our subscribe method below and set it tofalse again so that it's naturally false, set to true while the method is running and then set back to false when it posts. 
 
+That looks like this:
+export class AppComponent implements OnInit {
+  loadedPosts = [];
+  isFetching= false;
 
+private fetchPosts() {
+    this.isFetching=true;
+    
+.subscribe((posts) => {
+        this.isFetching=false;
 
+THen below in the HTML we add this as another conidtion for the two ngIF elements so that the first one will only appear
+if posts are less than 1 AND isFetching is false ,,,and then second element will only appear if ther is 1 or more and the isFetching is false.     SO then we create a third option and that is an ngIf isFetching is true so we do that and we diplay "...loading" 
+====
+ <p *ngIf="loadedPosts.length < 1  && !isFetching">No posts available!</p>
+      <ul class="list-group" *ngIf="loadedPosts.length >=  1 && !isFetching">
+        <li class="list-group-item" *ngFor="let post of loadedPosts">
+          <h3>{{post.title}}</h3>
+          <p>{{post.content}}</p>
 
+      </ul>
+      <p *ngIf="isFetching"> Loading.......</p>
 
+Video 12- Using a service for Http Requests
 
+we create a service called Posts with ng g s posts and we create two new methods and we cut and paste the code from the methods onCreatePost  and then onFetchPosts and put them into the service and then back in the ts we just put 
+this.postsService.createAndStorePosts(postData.title, postData.content) and then same with the fetch.
 
+NOT SURE ON THIS
 
-
+Video 13-  Services and Components Working Together
 
 
 
