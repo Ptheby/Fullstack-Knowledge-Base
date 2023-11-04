@@ -73,7 +73,7 @@ When we do this it returns in the console log because of how our methods are set
 
 VIDEO 8- Using RxJS Operators to Transform Response Data 
 
-In this lecture we are inporting the map operator. after the get method we are using a pipe to transform the data and
+In this lecture we are importing the map operator. after the GET method we are using a pipe to transform the data and
 we do that by mapping the resonseData and callback method to assign a new array called postsArray and a for loop? to assign a new "key" variable value of every responseData if the responseData has a unique key, then it will push that data onto the new postsArray and we return the new postsArray. 
 ============
 .get(
@@ -94,15 +94,29 @@ My questions on this are just i need a walk through of this and how it works exa
 
 
 
+Video 9
+Using Types with the HTTP Client
+
+
+--we can make our code better, optionally, by assigning a type to the response we get or to any request. First he creates a model interface named Post to export which is JS object with the properties title:string;content:string; id?:string   where the question mark makes it optional:::
+export interface Post {
+  title: string;
+  content: string;
+  id?: string;
+}
 
 
 
+HE first does this in a way for half the video then says there is a better way. And that is imediately after the word
+get push post ect we can include angled brackets and then the type of that data. In this case in our post method we have <{name:string}> because the  *****I AM NOT SURE> WHY IS THE FORMAT "NAME"? called i for help on this but he was busy. call back later but here below is the form to assign types to the GET and POST;;
+
+.get<{ [key:string] : Post}>(
 
 
+.post<{name: string}>(
 
 
-
-
+Video 10- 
 
 
 
