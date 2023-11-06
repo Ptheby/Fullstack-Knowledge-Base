@@ -1,1 +1,271 @@
+1. Module Intro- Learn how to add authenticaiton to your Angular App
+
+2. How Authentication Works
+In Angular the server stores the data that we are wanting to get at the client level. The client sends the authorization data and if it's correct, the server sends back a token that the client stores in storage, and then sends back w subsequent requests from the server that the server then verifies at each request. 
+
+3. Adding the Auth Page
+First we added a new component but he did it manually by adding a auth folder then auth component html and ts files then imported the necessary stuff into the ts and app module.ts but this is all done automatically if we create the component in the CLI. Just for practice in the ts file it will look like this:
+===============
+import {component} from '@angular/core'
+@Component ({
+ selector:'app-auth',
+ templateUrl: './auth.component.html'
+})
+export class AuthComponent {}
+================
+Then in the HTML of that new component we create a form to add an email and password  and buttons for Sign Up and Switch to Login. like this:
+=================
+ <form>
+      <div class="form-group">
+        <label for="email">E-Mail</label>
+        <input type="email" id="email" class="form-control" />
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" class="form-control" />
+      </div>
+      <div>
+        <button class="btn btn-primary">Sign Up</button> |
+        <button class="btn btn-primary">Switch to Login</button>
+      </div>
+    </form>
+================
+Lastly for now we have to add some routing for this and then a button at the top header nav to also take us there using the new routing. In the app-router-module it looks like this:
+================
+ { path: 'auth', component: AuthComponent }
+================
+and then the button in the header nav we use routerLinks like this:
+================
+<ul class="nav navbar-nav">
+        <li routerLinkActive="active">
+          <a routerLink="/auth">Authenticate</a>
+        </li>
+================
+Next as a first step we will make sure we can switch between login and sign up modes and thereafter we will add the logic to actually do that.
+
+
+Leture 4- Switching between Auth Modes
+
+In order to be able to switch modes we must first create a new property in the new Auth TS that we can store if the user is currently in login or sign up mode then we will adjust the user interface accordingly.
+So below first we are naming that property isLoginMode= true;     then we also are creating a method to switch that to be whatever it isn't. 
+=========================
+export class AuthComponent {
+  isLoginMode= true;
+
+  onSwitchMode() {
+    this.isLoginMode= !this.isLoginMode;
+  }
+Next in the HTML of auth component weare going to be adding a click listener and attached the new onSwitchMode method on the button with the label "Switch to Login". ALso, we arent wanting the email and password forms to change between the two because they are needed in both but we ARE having the buttons change. To do this we are going to DYNAMICALLY change the buttons depending on what is clicked. So we erase the "Sign Up" label on that button and add string interpolation with the logic  isLoginMode with a terninary operator so that if it's true show 'Login' and if false show ' Sign Up', and then we are also changing the button type to submit as well. 
+==================================
+  <button class="btn btn-primary" type="submit">{{isLoginMode ? 'Login' : 'Sign Up'}}</button> |
+==================================
+Then on the next button we are putting the type as button, and then erasing part of the "Switch to Login" because if it's already on Login we don't want it to say "switch to login". So we Keep >Switch to and that add string interpolation and have the order be opposite on the terninary so that if if isLoginMode is true it shows "Sign Up" and if false "Login", so now when we click the first button it submits the form and the second button will let us toggle between sign up and login. 
+==================================
+<button class="btn btn-primary" (click)="onSwitchMode()" type="button">Switch to {{isLoginMode ? 'Sign Up' : 'Login'}}</button>
+==================================
+Lecture 5- Handling Form Input
+
+We will be using the template driven approach for this form. 
+We start by adding ngModel, required, and names to both email password inputs. We also add email to email so that Angular will validate whether it's a valid email or not. that is a built in validator for emails. 
+On the password we have type password , like on email we actually have type email as well. 
+Then also on the oassword we have the built-o=in validator minlength and set it to ='6'.
+==============================
+    <label for="email">E-Mail</label>
+        <input
+        type="email"
+        id="email"
+        class="form-control"
+        ngModel
+        name="email"
+        required
+        email />
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input
+        type="password"
+        id="password"
+        class="form-control"
+        ngModel
+        name="password"
+        required
+        minlength="6" />
+      </div>
+
+=========================
+Then we want to disable the form if it is not valid so FIRST to do that on the form element we add local referenceand give it a name of authForm and set it to "ngForm" so that this gives us access to the form at other places, in this instance, the submit button below. Also on this form which comes shortly after is the (ngSubmit)="onSubmit(authForm) where we will be submitting the authform when we run that method at submit. looks like this:
+=====================
+<form #authForm="ngForm" (ngSubmit)= "onSubmit(authForm)">
+
+We disabled the submit button like this:
+=====================
+<button class="btn btn-primary" type="submit" [disabled]="!authForm.valid">
+
+Next in the TS file we need to create the onSubmit and we do that by passing form of type ngForm which needs to be imported also and then we console log that forms value and reset the form
+=========TS FILE==========
+onSwitchMode() {
+    this.isLoginMode= !this.isLoginMode;
+  }
+  onSubmit(form: NgForm){
+console.log(form.value);
+form.reset();
+  }
+
+Lecture 6 Preparing the Backend
+We go into firebase for this and will work with other backends.
+First we go into our Realtime DAtabase in Firebase.
+Then to rules where we set read and write to " auth !=null" then publish those rules so they take effect. 
+now going back to our app we can't access most of it it looks like. 
+
+NExt in firebase we go to SignIn method and select email/password and enable it. Next lecture we show how to sign up users. 
+
+
+
+Lecture 7- Preparing the Signup Request
+In this lecture we create a new auth service to handle ouer requests of authentication with firebase. WE inject HttpClient into this sergvice so we can use post etc. and then we create a new signUp method with email and password as parameters or arguments and then returning this.http.post because on firebase for signing up new users with email and password it is a post requerst. Then we use the endpoint URL provided for that, and then we replace the square brackets WITH api key inside it and replace it with our own under project settings with that long long. since its a post, that is the first argument, the url but we must also pass info and so we do that in a JS object with the 3 required pieces of info it saysit will need and thats email password and returnSecureToken:true. 
+============================
+ constructor(private http: HttpClient) { }
+
+  signUp(email: string, password: string) {
+   return this.http.post<AuthResponseData>(
+    'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyD8CJ827ndHnqcL5pmventi9fROFIUOnzI',
+   {
+    email: email,
+    password: password,
+    returnSecureToken:true
+
+   }
+  );
+=============================
+
+After that we create a new interface which i dont quite understand and we name is AuthReponseData where we are showing the types of responses we will get with the 6 proerptoes listed on firebase for this type of auth and it's response types.
+========================
+interface AuthResponseData {
+  kind:string;
+  idToken: string;
+  email:string;
+  refreshToken:string;
+  expiresIn: string;
+  localId:string;
+}
+==========================
+
+Lecture 8 Sending the Signup Request
+
+In the Auth ts file we start by taking out the console log in the onSubmit method and instead we are first checking if the form is valid so that if someone was able to get past our disabled submit button somehow, this is just another layer of defese. we say if the form is invalid return nothing. if it is valid then extract and assign the submitted form email to the variable name email and the same for password. 
+
+==================
+ onSubmit(form: NgForm){
+if(!form.valid) {
+  return;
+}
+const email= form.value.email;
+const password= form.value.password;
+
+============================
+then we say if it is log in mode do nothing YET but if not we will take you through our signup service we made with signup in our auth.service.ts which we ALSO have to INJECT into our constructor here so we can use it in this. 
+==========
+constructor(private authService: AuthService) {}
+===========
+so we run that and subscribe and we console log the named resData, or console log error. then we form reset at the end:
+===========
+f (this.isLoginMode) {
+
+} else {
+  this.authService.signup(email, password).subscribe(
+    resData => {
+      console.log(resData);
+
+    },
+    error => {
+      console.log(error);
+    }
+=============
+Now when we submit a new sign up email and password it logs it in console and then we can see the information in firebase. 
+Amazing! This will come in handy
+
+
+Lecture 9 Adding a loading Spinner and Error Handling Logic
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
