@@ -186,9 +186,49 @@ Amazing! This will come in handy
 
 
 Lecture 9 Adding a loading Spinner and Error Handling Logic
+==========================================================
+We start this off by googleing and going to https://loading.io/css/ to get the css and html for a loading spinner we want to use. 
+Then we created a new shared folder called loading-spinners where we create a loading-spinner.component.ts and css files and also load the LoadingSpinnerComponent in the app module. 
+Pasted the spinning loader css into the css file and then the accompompanying html into the template: at @Component and then 
+styleUrls:['./loading-spinner.component.css']
+})
 
+Then we want to hide the whole form when we are loading so we go back to our auth.ts and add a new property
+==
+isLoading=false;
+then set it to true right after email and password is assigned from onSubmit, and then false again at the end of both "elses" so that "isLoading" will only be true when it's actually loading. 
 
+THEN we can use the isLoading to hide the form if its loading by using *ngIf='!isLoading' which says only show this form if we are not loading
+==========
+<form #authForm="ngForm" (ngSubmit)= "onSubmit(authForm)" *ngIf="!isLoading">
+==========
+then right above that we are going to add the loading-spinner component on an another ngIf isloading like this
+===============
+<div *ngIf="isLoading" style="text-align: center;">
+      <app-loading-spinner></app-loading-spinner>
+    </div>
+===============
+now we want to show an error if there is an error like an email has already been used etc. 
+First we save a new property 
+====
+error=null;
+====
+and below error console log we do 
+===
+error => {
+      console.log(error);
+      this.error='An Error Occurred!'
+      this.isLoading=false;
+    }
+==
+now we create another dic in the auth html 
++++++++++++++++++
+<div *ngIf="error" class="alert alert-danger">
+      <p>{{error}}</p>
+===
+that will show this div if there is an error and the error will read "An Error Occurred!" and it knows this from the error handling logic built into the end of this on submit. 
 
+Lecture 10- 
 
 
 
